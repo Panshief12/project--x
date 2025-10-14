@@ -1,10 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down & past threshold
+        setIsVisible(false);
+      } else {
+        // Scrolling up
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
   const navItems = [{
     name: 'Features',
     active: true
@@ -23,7 +44,7 @@ const Navbar = () => {
   }];
 
   return (
-    <nav className="absolute top-4 left-4 right-4 z-50 flex justify-center">
+    <nav className={`fixed top-4 left-4 right-4 z-50 flex justify-center transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-32'}`}>
       <div style={{
         background: 'rgba(21, 22, 26, 0.80)',
         width: '1029px'

@@ -20,11 +20,7 @@ const HeroSection = () => {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
+      y: 0
     }
   };
 
@@ -33,12 +29,7 @@ const HeroSection = () => {
     visible: {
       opacity: 1,
       y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        delay: 0.6,
-        ease: "easeOut"
-      }
+      scale: 1
     }
   };
 
@@ -71,6 +62,7 @@ const HeroSection = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
+            transition={{ duration: 0.6 }}
           >
             <motion.div className="w-full flex flex-col justify-start items-center gap-4 md:gap-6" variants={itemVariants}>
               <motion.h1 
@@ -108,6 +100,7 @@ const HeroSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.6 }}
           >
             <div className="absolute inset-0 flex justify-center items-start pt-4 md:pt-6">
               <div className="relative w-full max-w-[300px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1132px]">
